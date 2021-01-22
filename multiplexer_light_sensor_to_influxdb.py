@@ -34,7 +34,6 @@ You should see the following:
     ^^ ------------ This is the multiplexer
 """
 
-import numpy as np
 import time
 import board
 import busio
