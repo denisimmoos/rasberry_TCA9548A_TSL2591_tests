@@ -6,6 +6,9 @@
 This script reads values from 4 TSL2591 light sensors which are connected to
 a TCA9548A multiplexer.
 
+Add the following to /boot/config.txt:
+
+
 dtoverlay=i2c-mux,pca9548a,addr=0x70
 
 Install the following pip3 modules:
