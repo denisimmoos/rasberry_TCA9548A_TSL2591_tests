@@ -29,7 +29,6 @@ You should see the following:
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: 70 -- -- -- -- -- -- --
     ^^ ------------ This is the multiplexer
-
 """
 
 import numpy as np
@@ -49,7 +48,6 @@ influxdb.create_database('MultiLightSensors')
 influxdb.switch_database('MultiLightSensors')
 influxdb.create_retention_policy(name='MultiLightSensors', duration="48h",
                                  replication=1, database='MultiLightSensors', default=False)
-
 
 # Create I2C bus as normal
 i2c = busio.I2C(board.SCL, board.SDA)
