@@ -1,4 +1,3 @@
-
 class Distance(object):
 
     """HC-SR04 - At the moment you can mesure a distance 
