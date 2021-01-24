@@ -1,7 +1,7 @@
 class Distance(object):
 
-    """Distance(GPIO_TRIGGER,GPIO_ECHO): 
-      - At the moment you can mesure a distance in cm 
+    """Distance(GPIO_TRIGGER,GPIO_ECHO):
+      - At the moment you can mesure a distance in cm
        :) and in the future nothing more"""
 
     import RPi.GPIO as GPIO
@@ -28,7 +28,7 @@ class Distance(object):
         self.GPIO.output(self.GPIO_TRIGGER, True)
 
         # set Trigger after 0.01ms to LOW
-        #time.sleep(0.00001)
+        # time.sleep(0.00001)
         self.time.sleep(0.01)
         self.GPIO.output(self.GPIO_TRIGGER, False)
 
@@ -40,22 +40,21 @@ class Distance(object):
         while self.GPIO.input(self.GPIO_ECHO) == 0:
             StartTime = self.time.time()
 
-	    # return 9999.9 if we got stuck for more than 0.2 seconds
-            # this is due to some hardware issues 
+            # return 9999.9 if we got stuck for more than 0.2 seconds
+            # this is due to some hardware issues
             if ReadTime - StartTime > 0.2:
-              self.GPIO.cleanup()
-              return 9999.9
+                self.GPIO.cleanup()
+                return 0.0
 
-	
         # save time of arrival
         ReadTime = self.time.time()
         while self.GPIO.input(self.GPIO_ECHO) == 1:
             StopTime = self.time.time()
 
-	    # return 9999.9 if we got stuck
+            # return 9999.9 if we got stuck
             if ReadTime - StopTime > 0.2:
-              self.GPIO.cleanup()
-              return 9999.9
+                self.GPIO.cleanup()
+                return 0.0
 
         # time difference between start and arrival
         TimeElapsed = StopTime - StartTime

@@ -40,7 +40,7 @@ import busio
 import adafruit_tsl2591
 import adafruit_tca9548a
 #from influxdb import InfluxDBClient
-#from os import system
+from os import system
 
 # MY own Classis
 
@@ -56,9 +56,9 @@ hc_sr04_4 = Distance(23, 24)
 
 #influxdb = InfluxDBClient(host='localhost', port=8086)
 # influxdb.drop_database('MultiLightSensors')
-#influxdb.create_database('MultiLightSensors')
-#influxdb.switch_database('MultiLightSensors')
-#influxdb.create_retention_policy(name='MultiLightSensors', duration="48h",
+# influxdb.create_database('MultiLightSensors')
+# influxdb.switch_database('MultiLightSensors')
+# influxdb.create_retention_policy(name='MultiLightSensors', duration="48h",
 #                                 replication=1, database='MultiLightSensors', default=False)
 
 # Create I2C bus as normal
@@ -77,7 +77,11 @@ tsl1 = adafruit_tsl2591.TSL2591(tca[1])
 tsl2 = adafruit_tsl2591.TSL2591(tca[2])
 tsl3 = adafruit_tsl2591.TSL2591(tca[3])
 
+# change this to false if you want Robbi to go into a dark corner
 reverse_direction = True
+
+# Robbies comfort zone
+comfort_zone = 12.0
 
 while True:
 
@@ -87,18 +91,18 @@ while True:
     print("-" * 80)
 
     dist_sensors = {
-        "yellow": float(hc_sr04_0.distance()),
+        "green": float(hc_sr04_0.distance()),
         "blue": float(hc_sr04_1.distance()),
-        "green": float(hc_sr04_2.distance()),
-        "red": float(hc_sr04_3.distance()),
-        "top": float(hc_sr04_4.distance()),
+        "yellow": float(hc_sr04_2.distance()),
+        "top": float(hc_sr04_3.distance()),
+        "red": float(hc_sr04_4.distance()),
     }
 
     print("\n")
     print("distance:")
     print("\n")
     for each in dist_sensors.keys():
-      print(each + ": " + str(dist_sensors[each]))
+        print(each + ": " + str(dist_sensors[each]))
 
     print("\n")
 
@@ -109,7 +113,7 @@ while True:
     sensors = {}
     sort_orders = {}
 
-    #system('clear')
+    # system('clear')
 
     print("-" * 80)
 
@@ -197,20 +201,34 @@ while True:
 #        },
 #    ]
 
-    #influxdb.write_points(json_body)
+    # influxdb.write_points(json_body)
 
-#    system('espeak "The brightest sensor is ' + sensors['full_spectrum']['first'][0] + '"')
-#
-#    if sensors['full_spectrum']['first'][0] == 'blue':
-#        system('espeak "so I will continue"')
-#
-#    if sensors['full_spectrum']['first'][0] == 'red':
-#        system('espeak "so I will  turn left"')
-#
-#    if sensors['full_spectrum']['first'][0] == 'yellow':
-#        system('espeak "so I will turn right"')
-#
-#    if sensors['full_spectrum']['first'][0] == 'green':
-#        system('espeak "so I will roll back"')
+    if dist_sensors['blue'] < comfort_zone:
+        system('espeak "hey, take your dirty hands of of me"')
+    else:
+        if sensors['full_spectrum']['first'][0] == 'blue':
+            system('espeak "The brightest sensor is ' + sensors['full_spectrum']['first'][0] + '"')
+            system('espeak "so I will continue"')
+
+    if dist_sensors['red'] < comfort_zone:
+        system('espeak "hey, is there a me too movement for robots. Stop it !"')
+    else:
+        if sensors['full_spectrum']['first'][0] == 'red':
+            system('espeak "The brightest sensor is ' + sensors['full_spectrum']['first'][0] + '"')
+            system('espeak "so I will  turn left"')
+
+    if dist_sensors['yellow'] < comfort_zone:
+        system('espeak "hey, do not touch my circuits. Bastard !"')
+    else:
+        if sensors['full_spectrum']['first'][0] == 'yellow':
+            system('espeak "The brightest sensor is ' + sensors['full_spectrum']['first'][0] + '"')
+            system('espeak "so I will turn right"')
+
+    if dist_sensors['green'] < comfort_zone:
+        system('espeak "mmmm, touch my booty I like it !"')
+    else:
+        if sensors['full_spectrum']['first'][0] == 'green':
+            system('espeak "The brightest sensor is ' + sensors['full_spectrum']['first'][0] + '"')
+            system('espeak "so I will roll back"')
 
     time.sleep(0.1)
