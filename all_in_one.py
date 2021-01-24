@@ -97,8 +97,8 @@ while True:
     print("\n")
     print("distance:")
     print("\n")
-    for x in dist_sensors.keys():
-      print(x + ": " + str(dist_sensors[x]))
+    for each in dist_sensors.keys():
+      print(each + ": " + str(dist_sensors[each]))
 
     print("\n")
 
