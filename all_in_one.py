@@ -44,13 +44,13 @@ from os import system
 
 # MY own Classis
 
-#from HC_SR04 import Distance
+from HC_SR04 import Distance
 
-#hc_sr04_0 = Distance(GPIO_TRIGGER=14, GPIO_ECHO=15)
-#hc_sr04_1 = Distance(GPIO_TRIGGER=14, GPIO_ECHO=15)
-#hc_sr04_2 = Distance(GPIO_TRIGGER=14, GPIO_ECHO=15)
-#hc_sr04_3 = Distance(GPIO_TRIGGER=14, GPIO_ECHO=15)
-
+hc_sr04_0 = Distance(5, 6)
+hc_sr04_1 = Distance(13, 19)
+hc_sr04_2 = Distance(26, 16)
+hc_sr04_3 = Distance(20, 21)
+hc_sr04_4 = Distance(23, 24)
 
 # initialize Influxdb
 
@@ -81,10 +81,35 @@ reverse_direction = True
 
 while True:
 
+    #
+    # distance sensors
+    #
+    print("-" * 80)
+
+    dist_sensors = {
+        "yellow": float(hc_sr04_0.distance()),
+        "blue": float(hc_sr04_1.distance()),
+        "green": float(hc_sr04_2.distance()),
+        "red": float(hc_sr04_3.distance()),
+        "top": float(hc_sr04_4.distance()),
+    }
+
+    print("\n")
+    print("distance:")
+    print("\n")
+    for x in dist_sensors.keys():
+      print(x + ": " + str(dist_sensors[x]))
+
+    print("\n")
+
+    #
+    # Light sensors
+    #
+
     sensors = {}
     sort_orders = {}
 
-    system('clear')
+    #system('clear')
 
     print("-" * 80)
 
@@ -188,4 +213,4 @@ while True:
 #    if sensors['full_spectrum']['first'][0] == 'green':
 #        system('espeak "so I will roll back"')
 
-    time.sleep(0.2)
+    time.sleep(0.1)
