@@ -1,6 +1,7 @@
 class Distance(object):
 
-    """HC-SR04 - At the moment you can mesure a distance 
+    """Distance(GPIO_TRIGGER,GPIO_ECHO): 
+      - At the moment you can mesure a distance in cm 
        :) and in the future nothing more"""
 
     import RPi.GPIO as GPIO
