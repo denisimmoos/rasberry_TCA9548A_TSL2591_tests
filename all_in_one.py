@@ -40,7 +40,7 @@ import busio
 import adafruit_tsl2591
 import adafruit_tca9548a
 #from influxdb import InfluxDBClient
-from os import system
+#from os import system
 
 # MY own Classis
 
