@@ -1,7 +1,7 @@
 class Distance(object):
 
     """HC-SR04 - At the moment you can mesure a distance 
-       :) and in the future not more"""
+       :) and in the future nothing more"""
 
     import RPi.GPIO as GPIO
     import time
