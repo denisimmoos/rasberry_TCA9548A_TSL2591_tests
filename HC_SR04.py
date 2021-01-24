@@ -44,7 +44,6 @@ class Distance(object):
             if ReadTime - StartTime > 0.2:
               self.GPIO.cleanup()
               return 9999.9
-              break
 
 	
         # save time of arrival
@@ -56,7 +55,6 @@ class Distance(object):
             if ReadTime - StopTime > 0.2:
               self.GPIO.cleanup()
               return 9999.9
-              break
 
         # time difference between start and arrival
         TimeElapsed = StopTime - StartTime
