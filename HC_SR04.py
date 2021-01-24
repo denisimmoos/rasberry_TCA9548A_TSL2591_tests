@@ -20,6 +20,7 @@ class Distance(object):
         self.GPIO.setup(self.GPIO_TRIGGER, self.GPIO.OUT)
         self.GPIO.setup(self.GPIO_ECHO, self.GPIO.IN)
 
+        # this is due to some strange hardware issues
         self.time.sleep(0.01)
 
         # set Trigger to HIGH
@@ -38,11 +39,14 @@ class Distance(object):
         while self.GPIO.input(self.GPIO_ECHO) == 0:
             StartTime = self.time.time()
 
-	    # return 9999.9 if we got stuck
+	    # return 9999.9 if we got stuck for more than 0.2 seconds
+            # this is due to some hardware issues 
             if ReadTime - StartTime > 0.2:
+              self.GPIO.cleanup()
               return 9999.9
               break
 
+	
         # save time of arrival
         ReadTime = self.time.time()
         while self.GPIO.input(self.GPIO_ECHO) == 1:
@@ -50,6 +54,7 @@ class Distance(object):
 
 	    # return 9999.9 if we got stuck
             if ReadTime - StopTime > 0.2:
+              self.GPIO.cleanup()
               return 9999.9
               break
 
@@ -59,6 +64,7 @@ class Distance(object):
         # and divide by 2, because there and back
         distincm = (TimeElapsed * 34300) / 2
 
+        # cleanup
         self.GPIO.cleanup()
 
         return distincm
